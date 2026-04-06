@@ -97,6 +97,7 @@ class QuizGame:
         ]
 
     def input_number(self, prompt, min_value, max_value):
+        range_message = f"⚠️ 잘못된 입력입니다. {min_value}-{max_value} 사이 숫자를 입력하세요."
         while True:
             try:
                 raw = input(prompt).strip()
@@ -110,11 +111,11 @@ class QuizGame:
             try:
                 value = int(raw)
             except ValueError:
-                print(f"⚠️ 잘못된 입력입니다. {min_value}-{max_value} 사이 숫자를 입력하세요.")
+                print(range_message)
                 continue
 
             if value < min_value or value > max_value:
-                print(f"⚠️ 잘못된 입력입니다. {min_value}-{max_value} 사이 숫자를 입력하세요.")
+                print(range_message)
                 continue
 
             return value
