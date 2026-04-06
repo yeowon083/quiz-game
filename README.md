@@ -166,10 +166,10 @@ git pull origin main
 - 문제 삭제 기능 추가: `main.py`의 메뉴(`show_menu`/`run`)와 삭제 메서드 추가, `save_state()` 연동이 필요합니다.
 - 점수 히스토리 추가: `state.json` 스키마 확장 + `save_state/load_state/show_best_score` 수정이 필요합니다.
 
-## 14. 평가기준 1~6 실증 자료(코드/로그)
+## 14. 기능 및 Git 실증 자료(코드/로그)
 아래 내용은 실제 실행/명령 출력 결과입니다.
 
-### 14-1. 프로그램 실행/메뉴 동작(평가기준 1)
+### 14-1. 프로그램 실행/메뉴 동작
 ```text
 $ printf '5\n' | python3 main.py
 📂 저장된 데이터를 불러왔습니다. (퀴즈 6개, 최고점수 83)
@@ -185,7 +185,7 @@ $ printf '5\n' | python3 main.py
 선택: 👋 게임을 종료합니다. 데이터가 저장되었습니다.
 ```
 
-### 14-2. 정답/오답 판정 + 입력 예외 처리(평가기준 2)
+### 14-2. 정답/오답 판정 + 입력 예외 처리
 ```text
 $ printf 'abc\n9\n5\n' | python3 main.py
 선택: ⚠️ 잘못된 입력입니다. 1-5 사이 숫자를 입력하세요.
@@ -201,7 +201,7 @@ $ printf '1\n3\n3\n3\n3\n3\n3\n5\n' | python3 main.py
 🏆 결과: 6문제 중 4문제 정답! (66점)
 ```
 
-### 14-3. 재실행 시 데이터 유지(평가기준 3)
+### 14-3. 재실행 시 데이터 유지
 ```text
 $ printf '2\n유지검증 임시문제?\nA\nB\nC\nD\n1\n5\n' | python3 main.py
 ✅ 퀴즈가 추가되었습니다!
@@ -211,7 +211,7 @@ $ printf '3\n5\n' | python3 main.py
 [7] 유지검증 임시문제?
 ```
 
-### 14-4. 기본 퀴즈 5개 이상(평가기준 4)
+### 14-4. 기본 퀴즈 5개 이상
 ```text
 $ python3 - << 'PY'
 import json
@@ -222,16 +222,16 @@ PY
 quiz_count 6
 ```
 
-### 14-5. 10개 이상 커밋 존재(평가기준 5)
+### 14-5. 10개 이상 커밋 존재
 ```text
 $ git rev-list --count HEAD
 15
 ```
 
-### 14-6. 브랜치/병합 기록(평가기준 6)
+### 14-6. 브랜치/병합 기록
 ```text
 $ git log --oneline --graph --decorate --all -n 25
-* 5427e51 (HEAD -> main, origin/main) Docs: 평가기준 4~6 대응 코드 구조와 기술 원리 설명 추가
+* 5427e51 (HEAD -> main, origin/main) Docs: 코드 구조와 기술 원리 설명 추가
 *   3a51928 Merge: 재평가용 증빙 문서 브랜치 병합
 |\  
 | * 8d32bad (feature/evidence-docs) Docs: 재평가용 요구사항 증빙 문서 추가
