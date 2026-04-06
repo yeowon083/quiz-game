@@ -59,3 +59,28 @@ quiz-game/
     "best_total": 5
 }
 ```
+
+## 7. Git 실습 기록 가이드
+아래 흐름으로 `clone`, `checkout`, `merge`, `pull`을 기록할 수 있습니다.
+
+```bash
+# 브랜치 생성/작업/병합
+git checkout -b feature/play-options
+git checkout main
+git merge --no-ff feature/play-options
+
+# 저장소 복제 실습
+cd ..
+git clone https://github.com/yeowon083/quiz-game.git quiz-game-clone
+cd quiz-game-clone
+# README 한 줄 수정 후
+git add README.md
+git commit -m "Docs: clone 저장소에서 README 한 줄 추가"
+git push origin main
+
+# 원래 로컬로 돌아와 pull
+cd ../quiz-game
+git pull origin main
+```
+
+- clone 실습 반영: 2026-04-06
