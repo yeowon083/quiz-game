@@ -158,6 +158,7 @@ class QuizGame:
             self.best_score = best_score if isinstance(best_score, int) else None
             self.best_correct = best_correct if isinstance(best_correct, int) else None
             self.best_total = best_total if isinstance(best_total, int) else None
+            self._sanitize_best_score_fields()
 
             print(
                 "📂 저장된 데이터를 불러왔습니다. "
@@ -189,6 +190,24 @@ class QuizGame:
                 json.dump(data, file, ensure_ascii=False, indent=4)
         except OSError:
             print("⚠️ 데이터를 저장하지 못했습니다. 파일 권한을 확인하세요.")
+
+    def _sanitize_best_score_fields(self):
+        if self.best_score is None and self.best_correct is None and self.best_total is None:
+            return
+
+        is_valid = (
+            isinstance(self.best_score, int)
+            and isinstance(self.best_correct, int)
+            and isinstance(self.best_total, int)
+            and 0 <= self.best_score <= 100
+            and 0 <= self.best_correct <= self.best_total
+            and self.best_total > 0
+        )
+
+        if not is_valid:
+            self.best_score = None
+            self.best_correct = None
+            self.best_total = None
 
     def show_menu(self):
         print()
