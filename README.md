@@ -95,3 +95,16 @@ git pull origin main
 - 개발 환경 설정 스크린샷 첨부 (Python 버전, Git 설정 등)
 - 실행 결과 스크린샷 첨부 (퀴즈 추가/목록/플레이/점수 화면)
 - `git log --oneline --graph` 결과 스크린샷 첨부
+
+## 10. 제출 증빙 링크
+- 저장소 URL: `https://github.com/yeowon083/quiz-game`
+- 요구사항 충족 근거 문서: `docs/submission-evidence.md`
+- 스크린샷 파일:
+  - `docs/screenshots/env-python-git.png`
+  - `docs/screenshots/menu.png`
+  - `docs/screenshots/add-quiz.png`
+  - `docs/screenshots/quiz-list.png`
+  - `docs/screenshots/play-quiz.png`
+  - `docs/screenshots/result-score.png`
+  - `docs/screenshots/best-score.png`
+  - `docs/screenshots/git-log-graph.png`
