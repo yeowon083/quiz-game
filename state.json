@@ -1,0 +1,67 @@
+{
+    "quizzes": [
+        {
+            "question": "Python에서 변수는 무엇을 저장하기 위해 사용하나요?",
+            "choices": [
+                "함수 이름",
+                "데이터 값",
+                "반복 횟수만",
+                "주석 내용"
+            ],
+            "answer": 2
+        },
+        {
+            "question": "다음 중 정수형(int) 값은 무엇인가요?",
+            "choices": [
+                "3.14",
+                "\"hello\"",
+                "42",
+                "True"
+            ],
+            "answer": 3
+        },
+        {
+            "question": "조건에 따라 다른 코드를 실행할 때 사용하는 문법은?",
+            "choices": [
+                "for",
+                "while",
+                "if/elif/else",
+                "def"
+            ],
+            "answer": 3
+        },
+        {
+            "question": "리스트(list)에 대한 설명으로 올바른 것은?",
+            "choices": [
+                "키-값 쌍으로만 저장한다",
+                "순서가 있고 여러 값을 저장할 수 있다",
+                "참/거짓만 저장한다",
+                "숫자만 저장할 수 있다"
+            ],
+            "answer": 2
+        },
+        {
+            "question": "함수를 정의할 때 사용하는 키워드는?",
+            "choices": [
+                "class",
+                "return",
+                "def",
+                "import"
+            ],
+            "answer": 3
+        },
+        {
+            "question": "클래스의 생성자 메서드 이름은 무엇인가요?",
+            "choices": [
+                "create",
+                "__start__",
+                "__init__",
+                "self"
+            ],
+            "answer": 3
+        }
+    ],
+    "best_score": 83,
+    "best_correct": 5,
+    "best_total": 6
+}
