@@ -84,3 +84,14 @@ git pull origin main
 ```
 
 - clone 실습 반영: 2026-04-06
+
+## 8. 개발 환경
+- Python 3.10 이상
+- Git
+- VSCode (권장)
+
+## 9. 제출 체크리스트
+- GitHub 저장소 URL 제출
+- 개발 환경 설정 스크린샷 첨부 (Python 버전, Git 설정 등)
+- 실행 결과 스크린샷 첨부 (퀴즈 추가/목록/플레이/점수 화면)
+- `git log --oneline --graph` 결과 스크린샷 첨부
