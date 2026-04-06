@@ -3,6 +3,8 @@ from pathlib import Path
 
 
 STATE_FILE = Path("state.json")
+SEPARATOR = "=" * 40
+LINE = "-" * 40
 
 
 class InputTerminated(Exception):
@@ -16,7 +18,7 @@ class Quiz:
         self.answer = answer
 
     def show(self, number):
-        print("-" * 40)
+        print(LINE)
         print(f"[문제 {number}]")
         print(self.question)
         print()
@@ -190,15 +192,15 @@ class QuizGame:
 
     def show_menu(self):
         print()
-        print("=" * 40)
+        print(SEPARATOR)
         print("        나만의 퀴즈 게임")
-        print("=" * 40)
+        print(SEPARATOR)
         print("1. 퀴즈 풀기")
         print("2. 퀴즈 추가")
         print("3. 퀴즈 목록")
         print("4. 점수 확인")
         print("5. 종료")
-        print("=" * 40)
+        print(SEPARATOR)
 
     def play_quiz(self):
         if not self.quizzes:
@@ -221,7 +223,7 @@ class QuizGame:
         total = len(self.quizzes)
         score = int((correct_count / total) * 100)
         print()
-        print("=" * 40)
+        print(SEPARATOR)
         print(f"🏆 결과: {total}문제 중 {correct_count}문제 정답! ({score}점)")
 
         if self.best_score is None or score > self.best_score:
@@ -234,7 +236,7 @@ class QuizGame:
             print("👏 최고 점수와 동일한 점수입니다!")
         else:
             print(f"ℹ️ 현재 최고 점수는 {self.best_score}점입니다.")
-        print("=" * 40)
+        print(SEPARATOR)
 
     def add_quiz(self):
         print()
@@ -257,10 +259,10 @@ class QuizGame:
 
         print()
         print(f"📋 등록된 퀴즈 목록 (총 {len(self.quizzes)}개)")
-        print("-" * 40)
+        print(LINE)
         for idx, quiz in enumerate(self.quizzes, start=1):
             print(f"[{idx}] {quiz.question}")
-        print("-" * 40)
+        print(LINE)
 
     def show_best_score(self):
         if self.best_score is None:
