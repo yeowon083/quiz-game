@@ -165,3 +165,118 @@ git pull origin main
 ### 13-4. 요구사항 변경 시 수정 지점
 - 문제 삭제 기능 추가: `main.py`의 메뉴(`show_menu`/`run`)와 삭제 메서드 추가, `save_state()` 연동이 필요합니다.
 - 점수 히스토리 추가: `state.json` 스키마 확장 + `save_state/load_state/show_best_score` 수정이 필요합니다.
+
+## 14. 평가기준 1~6 실증 자료(코드/로그)
+아래 내용은 실제 실행/명령 출력 결과입니다.
+
+### 14-1. 프로그램 실행/메뉴 동작(평가기준 1)
+```text
+$ printf '5\n' | python3 main.py
+📂 저장된 데이터를 불러왔습니다. (퀴즈 6개, 최고점수 83)
+========================================
+        나만의 퀴즈 게임
+========================================
+1. 퀴즈 풀기
+2. 퀴즈 추가
+3. 퀴즈 목록
+4. 점수 확인
+5. 종료
+========================================
+선택: 👋 게임을 종료합니다. 데이터가 저장되었습니다.
+```
+
+### 14-2. 정답/오답 판정 + 입력 예외 처리(평가기준 2)
+```text
+$ printf 'abc\n9\n5\n' | python3 main.py
+선택: ⚠️ 잘못된 입력입니다. 1-5 사이 숫자를 입력하세요.
+선택: ⚠️ 잘못된 입력입니다. 1-5 사이 숫자를 입력하세요.
+```
+
+```text
+$ printf '1\n3\n3\n3\n3\n3\n3\n5\n' | python3 main.py
+정답 입력 (1-4): ❌ 오답입니다! 정답은 2번입니다.
+...
+정답 입력 (1-4): ✅ 정답입니다!
+...
+🏆 결과: 6문제 중 4문제 정답! (66점)
+```
+
+### 14-3. 재실행 시 데이터 유지(평가기준 3)
+```text
+$ printf '2\n유지검증 임시문제?\nA\nB\nC\nD\n1\n5\n' | python3 main.py
+✅ 퀴즈가 추가되었습니다!
+
+$ printf '3\n5\n' | python3 main.py
+📂 저장된 데이터를 불러왔습니다. (퀴즈 7개, 최고점수 83)
+[7] 유지검증 임시문제?
+```
+
+### 14-4. 기본 퀴즈 5개 이상(평가기준 4)
+```text
+$ python3 - << 'PY'
+import json
+from pathlib import Path
+s=json.loads(Path('state.json').read_text(encoding='utf-8'))
+print('quiz_count', len(s.get('quizzes', [])))
+PY
+quiz_count 6
+```
+
+### 14-5. 10개 이상 커밋 존재(평가기준 5)
+```text
+$ git rev-list --count HEAD
+15
+```
+
+### 14-6. 브랜치/병합 기록(평가기준 6)
+```text
+$ git log --oneline --graph --decorate --all -n 25
+* 5427e51 (HEAD -> main, origin/main) Docs: 평가기준 4~6 대응 코드 구조와 기술 원리 설명 추가
+*   3a51928 Merge: 재평가용 증빙 문서 브랜치 병합
+|\  
+| * 8d32bad (feature/evidence-docs) Docs: 재평가용 요구사항 증빙 문서 추가
+|/  
+* 09019ba Docs: 제출용 실행 및 git 로그 스크린샷 추가
+...
+```
+
+### 14-7. 핵심 구현 코드 발췌
+아래 메서드는 `main.py`에 실제 구현되어 있습니다.
+
+```python
+def input_number(self, prompt, min_value, max_value):
+    range_message = f"⚠️ 잘못된 입력입니다. {min_value}-{max_value} 사이 숫자를 입력하세요."
+    while True:
+        try:
+            raw = input(prompt).strip()
+        except (KeyboardInterrupt, EOFError):
+            raise InputTerminated
+        if not raw:
+            print("⚠️ 입력이 비어 있습니다. 다시 입력하세요.")
+            continue
+        try:
+            value = int(raw)
+        except ValueError:
+            print(range_message)
+            continue
+        if value < min_value or value > max_value:
+            print(range_message)
+            continue
+        return value
+```
+
+```python
+def load_state(self):
+    if not STATE_FILE.exists():
+        self.quizzes = self.get_default_quizzes()
+        ...
+        return
+    try:
+        with STATE_FILE.open("r", encoding="utf-8") as file:
+            data = json.load(file)
+        ...
+    except (json.JSONDecodeError, OSError, ValueError, TypeError):
+        self.quizzes = self.get_default_quizzes()
+        ...
+        self.save_state()
+```
