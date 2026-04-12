@@ -163,6 +163,7 @@ class QuizGame:
         try:
             with STATE_FILE.open("w", encoding="utf-8") as file:
                 json.dump(data, file, ensure_ascii=False, indent=4)
+                file.write("\n")
         except OSError:
             print("데이터 저장 중 오류가 발생했습니다.")
 
