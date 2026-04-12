@@ -35,10 +35,23 @@ class Quiz:
 
     @classmethod
     def from_dict(cls, data):
+        question = data["question"]
+        choices = data["choices"]
+        answer = data["answer"]
+
+        if not isinstance(question, str) or not question.strip():
+            raise ValueError("문제는 비어 있지 않은 문자열이어야 합니다.")
+        if not isinstance(choices, list) or len(choices) != 4:
+            raise ValueError("선택지는 4개의 목록이어야 합니다.")
+        if not all(isinstance(choice, str) and choice.strip() for choice in choices):
+            raise ValueError("선택지는 비어 있지 않은 문자열이어야 합니다.")
+        if not isinstance(answer, int) or not 1 <= answer <= 4:
+            raise ValueError("정답은 1부터 4 사이의 숫자여야 합니다.")
+
         return cls(
-            data["question"],
-            data["choices"],
-            data["answer"],
+            question.strip(),
+            [choice.strip() for choice in choices],
+            answer,
         )
 
 
@@ -167,7 +180,7 @@ class QuizGame:
             self.best_total = data.get("best_total", 0)
             score_text = self.best_score if self.best_score is not None else 0
             print(f"저장된 데이터를 불러왔습니다. 퀴즈 {len(self.quizzes)}개, 최고점수 {score_text}점")
-        except (OSError, json.JSONDecodeError, KeyError, TypeError):
+        except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError):
             print("저장 파일을 읽을 수 없어 기본 퀴즈 데이터로 복구합니다.")
             self.quizzes = create_default_quizzes()
             self.best_score = None
