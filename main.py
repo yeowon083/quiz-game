@@ -1,3 +1,10 @@
+import json
+from pathlib import Path
+
+
+STATE_FILE = Path("state.json")
+
+
 class Quiz:
     """개별 퀴즈의 문제, 선택지, 정답을 관리한다."""
 
@@ -71,6 +78,7 @@ class QuizGame:
         self.quizzes = create_default_quizzes()
         self.best_score = None
         self.best_total = 0
+        self.load()
 
     def display_menu(self):
         print()
@@ -130,7 +138,36 @@ class QuizGame:
                 break
 
     def save(self):
-        pass
+        data = {
+            "quizzes": [quiz.to_dict() for quiz in self.quizzes],
+            "best_score": self.best_score,
+            "best_total": self.best_total,
+        }
+
+        try:
+            with STATE_FILE.open("w", encoding="utf-8") as file:
+                json.dump(data, file, ensure_ascii=False, indent=4)
+        except OSError:
+            print("데이터 저장 중 오류가 발생했습니다.")
+
+    def load(self):
+        if not STATE_FILE.exists():
+            print("저장 파일이 없어 기본 퀴즈 데이터로 시작합니다.")
+            return
+
+        try:
+            with STATE_FILE.open("r", encoding="utf-8") as file:
+                data = json.load(file)
+            self.quizzes = [Quiz.from_dict(item) for item in data.get("quizzes", [])]
+            self.best_score = data.get("best_score")
+            self.best_total = data.get("best_total", 0)
+            print(f"저장된 데이터를 불러왔습니다. 퀴즈 {len(self.quizzes)}개")
+        except (OSError, json.JSONDecodeError, KeyError, TypeError):
+            print("저장 파일을 읽을 수 없어 기본 퀴즈 데이터로 복구합니다.")
+            self.quizzes = create_default_quizzes()
+            self.best_score = None
+            self.best_total = 0
+            self.save()
 
 
 def main():
