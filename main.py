@@ -1,4 +1,5 @@
 import json
+import random
 from pathlib import Path
 
 
@@ -125,7 +126,7 @@ class QuizGame:
                 self.save()
                 break
             if menu == 1:
-                print("퀴즈 풀기 기능은 준비 중입니다.")
+                self.play_quiz()
             elif menu == 2:
                 print("퀴즈 추가 기능은 준비 중입니다.")
             elif menu == 3:
@@ -168,6 +169,48 @@ class QuizGame:
             self.best_score = None
             self.best_total = 0
             self.save()
+
+    def play_quiz(self):
+        if not self.quizzes:
+            print("등록된 퀴즈가 없습니다. 먼저 퀴즈를 추가해 주세요.")
+            return
+
+        quizzes = self.quizzes[:]
+        random.shuffle(quizzes)
+        correct_count = 0
+
+        print()
+        print(f"퀴즈를 시작합니다! 총 {len(quizzes)}문제")
+
+        for index, quiz in enumerate(quizzes, start=1):
+            quiz.display(index)
+            answer = self.get_number_input("정답 입력 (1-4): ", 1, 4)
+
+            if answer is None:
+                self.save()
+                return
+
+            if quiz.is_correct(answer):
+                correct_count += 1
+                print("정답입니다!")
+            else:
+                print(f"오답입니다. 정답은 {quiz.answer}번입니다.")
+
+        self.show_result(correct_count, len(quizzes))
+
+    def show_result(self, correct_count, total_count):
+        score = round((correct_count / total_count) * 100)
+        print("=" * 40)
+        print(f"결과: {total_count}문제 중 {correct_count}문제 정답! ({score}점)")
+
+        if self.best_score is None or score > self.best_score:
+            self.best_score = score
+            self.best_total = total_count
+            self.save()
+            print("새로운 최고 점수입니다!")
+        else:
+            print(f"현재 최고 점수는 {self.best_score}점입니다.")
+        print("=" * 40)
 
 
 def main():
