@@ -1,0 +1,57 @@
+{
+    "quizzes": [
+        {
+            "question": "Python에서 값을 저장하기 위해 이름을 붙인 공간을 무엇이라고 하나요?",
+            "choices": [
+                "함수",
+                "변수",
+                "반복문",
+                "주석"
+            ],
+            "answer": 2
+        },
+        {
+            "question": "Python에서 여러 값을 순서대로 저장할 때 주로 사용하는 자료형은?",
+            "choices": [
+                "bool",
+                "int",
+                "list",
+                "str"
+            ],
+            "answer": 3
+        },
+        {
+            "question": "조건에 따라 다른 코드를 실행할 때 사용하는 키워드는?",
+            "choices": [
+                "if",
+                "for",
+                "def",
+                "class"
+            ],
+            "answer": 1
+        },
+        {
+            "question": "함수를 정의할 때 사용하는 Python 키워드는?",
+            "choices": [
+                "return",
+                "import",
+                "while",
+                "def"
+            ],
+            "answer": 4
+        },
+        {
+            "question": "객체를 만들기 위한 설계도 역할을 하는 문법은?",
+            "choices": [
+                "클래스",
+                "딕셔너리",
+                "문자열",
+                "연산자"
+            ],
+            "answer": 1
+        }
+    ],
+    "best_score": null,
+    "best_correct": 0,
+    "best_total": 0
+}
