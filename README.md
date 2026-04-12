@@ -74,4 +74,4 @@ quiz-game/
 
 - 기능 단위 커밋을 10개 이상 작성했습니다.
 - `feature/quiz-play` 브랜치에서 퀴즈 풀이 기능을 구현한 뒤 `main` 브랜치로 병합했습니다.
-- 원격 저장소 push, clone, pull 실습은 저장소 접근 권한이 있는 환경에서 진행합니다.
+- GitHub 원격 저장소를 clone한 뒤 README를 수정하고, 원래 작업 폴더에서 pull로 변경사항을 가져왔습니다.
