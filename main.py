@@ -1,15 +1,8 @@
 import json
-import sys
 from pathlib import Path
 
 
 STATE_FILE = Path("state.json")
-
-
-def configure_console_encoding():
-    for stream in (sys.stdin, sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8")
 
 
 class Quiz:
@@ -300,7 +293,6 @@ class QuizGame:
 
 
 def main():
-    configure_console_encoding()
     game = QuizGame()
     game.run()
 
