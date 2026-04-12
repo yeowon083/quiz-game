@@ -78,6 +78,7 @@ class QuizGame:
     def __init__(self):
         self.quizzes = create_default_quizzes()
         self.best_score = None
+        self.best_correct = 0
         self.best_total = 0
         self.load()
 
@@ -128,11 +129,11 @@ class QuizGame:
             if menu == 1:
                 self.play_quiz()
             elif menu == 2:
-                print("퀴즈 추가 기능은 준비 중입니다.")
+                self.add_quiz()
             elif menu == 3:
-                print("퀴즈 목록 기능은 준비 중입니다.")
+                self.list_quizzes()
             elif menu == 4:
-                print("점수 확인 기능은 준비 중입니다.")
+                self.show_best_score()
             elif menu == 5:
                 self.save()
                 print("게임을 종료합니다.")
@@ -142,6 +143,7 @@ class QuizGame:
         data = {
             "quizzes": [quiz.to_dict() for quiz in self.quizzes],
             "best_score": self.best_score,
+            "best_correct": self.best_correct,
             "best_total": self.best_total,
         }
 
@@ -161,12 +163,15 @@ class QuizGame:
                 data = json.load(file)
             self.quizzes = [Quiz.from_dict(item) for item in data.get("quizzes", [])]
             self.best_score = data.get("best_score")
+            self.best_correct = data.get("best_correct", 0)
             self.best_total = data.get("best_total", 0)
-            print(f"저장된 데이터를 불러왔습니다. 퀴즈 {len(self.quizzes)}개")
+            score_text = self.best_score if self.best_score is not None else 0
+            print(f"저장된 데이터를 불러왔습니다. 퀴즈 {len(self.quizzes)}개, 최고점수 {score_text}점")
         except (OSError, json.JSONDecodeError, KeyError, TypeError):
             print("저장 파일을 읽을 수 없어 기본 퀴즈 데이터로 복구합니다.")
             self.quizzes = create_default_quizzes()
             self.best_score = None
+            self.best_correct = 0
             self.best_total = 0
             self.save()
 
@@ -205,12 +210,75 @@ class QuizGame:
 
         if self.best_score is None or score > self.best_score:
             self.best_score = score
+            self.best_correct = correct_count
             self.best_total = total_count
             self.save()
             print("새로운 최고 점수입니다!")
         else:
             print(f"현재 최고 점수는 {self.best_score}점입니다.")
         print("=" * 40)
+
+    def get_text_input(self, prompt):
+        while True:
+            try:
+                value = input(prompt).strip()
+            except (KeyboardInterrupt, EOFError):
+                print()
+                print("입력이 중단되었습니다. 가능한 범위에서 저장 후 종료합니다.")
+                return None
+
+            if value:
+                return value
+
+            print("빈 입력은 사용할 수 없습니다. 다시 입력하세요.")
+
+    def add_quiz(self):
+        print()
+        print("새로운 퀴즈를 추가합니다.")
+
+        question = self.get_text_input("문제를 입력하세요: ")
+        if question is None:
+            self.save()
+            return
+
+        choices = []
+        for index in range(1, 5):
+            choice = self.get_text_input(f"선택지 {index}: ")
+            if choice is None:
+                self.save()
+                return
+            choices.append(choice)
+
+        answer = self.get_number_input("정답 번호 (1-4): ", 1, 4)
+        if answer is None:
+            self.save()
+            return
+
+        self.quizzes.append(Quiz(question, choices, answer))
+        self.save()
+        print("퀴즈가 추가되었습니다!")
+
+    def list_quizzes(self):
+        if not self.quizzes:
+            print("등록된 퀴즈가 없습니다.")
+            return
+
+        print()
+        print(f"등록된 퀴즈 목록 (총 {len(self.quizzes)}개)")
+        print("-" * 40)
+        for index, quiz in enumerate(self.quizzes, start=1):
+            print(f"[{index}] {quiz.question}")
+        print("-" * 40)
+
+    def show_best_score(self):
+        if self.best_score is None:
+            print("아직 퀴즈를 푼 기록이 없습니다.")
+            return
+
+        print(
+            f"최고 점수: {self.best_score}점 "
+            f"({self.best_total}문제 중 {self.best_correct}문제 정답)"
+        )
 
 
 def main():
