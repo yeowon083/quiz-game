@@ -86,7 +86,12 @@ class QuizGame:
 
     def get_number_input(self, prompt, minimum, maximum):
         while True:
-            raw_value = input(prompt).strip()
+            try:
+                raw_value = input(prompt).strip()
+            except (KeyboardInterrupt, EOFError):
+                print()
+                print("입력이 중단되었습니다. 안전하게 종료합니다.")
+                return None
 
             if raw_value == "":
                 print(f"잘못된 입력입니다. {minimum}-{maximum} 사이의 숫자를 입력하세요.")
@@ -108,6 +113,9 @@ class QuizGame:
             self.display_menu()
             menu = self.get_number_input("선택: ", 1, 5)
 
+            if menu is None:
+                self.save()
+                break
             if menu == 1:
                 print("퀴즈 풀기 기능은 준비 중입니다.")
             elif menu == 2:
@@ -117,8 +125,12 @@ class QuizGame:
             elif menu == 4:
                 print("점수 확인 기능은 준비 중입니다.")
             elif menu == 5:
+                self.save()
                 print("게임을 종료합니다.")
                 break
+
+    def save(self):
+        pass
 
 
 def main():
