@@ -72,10 +72,58 @@ class QuizGame:
         self.best_score = None
         self.best_total = 0
 
+    def display_menu(self):
+        print()
+        print("=" * 40)
+        print("        나만의 퀴즈 게임")
+        print("=" * 40)
+        print("1. 퀴즈 풀기")
+        print("2. 퀴즈 추가")
+        print("3. 퀴즈 목록")
+        print("4. 점수 확인")
+        print("5. 종료")
+        print("=" * 40)
+
+    def get_number_input(self, prompt, minimum, maximum):
+        while True:
+            raw_value = input(prompt).strip()
+
+            if raw_value == "":
+                print(f"잘못된 입력입니다. {minimum}-{maximum} 사이의 숫자를 입력하세요.")
+                continue
+
+            try:
+                value = int(raw_value)
+            except ValueError:
+                print(f"잘못된 입력입니다. {minimum}-{maximum} 사이의 숫자를 입력하세요.")
+                continue
+
+            if minimum <= value <= maximum:
+                return value
+
+            print(f"잘못된 입력입니다. {minimum}-{maximum} 사이의 숫자를 입력하세요.")
+
+    def run(self):
+        while True:
+            self.display_menu()
+            menu = self.get_number_input("선택: ", 1, 5)
+
+            if menu == 1:
+                print("퀴즈 풀기 기능은 준비 중입니다.")
+            elif menu == 2:
+                print("퀴즈 추가 기능은 준비 중입니다.")
+            elif menu == 3:
+                print("퀴즈 목록 기능은 준비 중입니다.")
+            elif menu == 4:
+                print("점수 확인 기능은 준비 중입니다.")
+            elif menu == 5:
+                print("게임을 종료합니다.")
+                break
+
 
 def main():
     game = QuizGame()
-    print(f"나만의 퀴즈 게임: 기본 퀴즈 {len(game.quizzes)}개")
+    game.run()
 
 
 if __name__ == "__main__":
