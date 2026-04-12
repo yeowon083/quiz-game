@@ -49,9 +49,19 @@
                 "연산자"
             ],
             "answer": 1
+        },
+        {
+            "question": "Python에서 화면에 글자를 출력할 때 사용하는 것은 무엇일까?",
+            "choices": [
+                "input()",
+                "print()",
+                "open()",
+                "len()"
+            ],
+            "answer": 2
         }
     ],
-    "best_score": null,
-    "best_correct": 0,
-    "best_total": 0
+    "best_score": 80,
+    "best_correct": 4,
+    "best_total": 5
 }
