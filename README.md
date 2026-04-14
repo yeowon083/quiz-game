@@ -73,14 +73,12 @@ quiz-game/
 └── state.json
 ```
 
-## 코드 구조
+## 클래스 구조
 
-| 함수 | 파일 | 역할 |
-|------|------|------|
-| `load_state`, `save_state` | `main.py` | 퀴즈 데이터와 최고 점수를 파일에서 읽고 저장 |
-| `get_number`, `get_text` | `main.py` | 사용자 입력 검증 |
-| `play_quiz`, `add_quiz` | `main.py` | 퀴즈 풀이와 새 퀴즈 추가 |
-| `list_quizzes`, `show_best_score` | `main.py` | 퀴즈 목록과 최고 점수 출력 |
+| 클래스 | 파일 | 역할 |
+|--------|------|------|
+| `Quiz` | `main.py` | 퀴즈 1개의 문제, 선택지, 정답 저장 및 정답 확인 |
+| `QuizGame` | `main.py` | 메뉴 루프, 입력 검증, 퀴즈 진행, 퀴즈 추가, 목록 출력, 점수 관리, 파일 저장과 불러오기 |
 
 ## 데이터 파일 설명 (`state.json`)
 
